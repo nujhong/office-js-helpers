@@ -229,8 +229,8 @@ export class Authenticator {
             xhr.open('POST', endpoint.tokenUrl);
 
             xhr.setRequestHeader('Accept', 'application/json');
-            xhr.setRequestHeader('Content-Type', 'application/json');
-
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+            
             for (let header in headers) {
                 if (header === 'Accept' || header === 'Content-Type') {
                     continue;
