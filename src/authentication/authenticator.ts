@@ -241,9 +241,10 @@ export class Authenticator {
 
             // Added grant_type and credential for Authorization Code Flow
             var params = "code=" + data.code + "&grant_type=" + "authorization_code" + "&client_id=" + endpoint.clientId;
-            for (let param of Object.keys(endpoint.extraQueryParameters)) {
-              params+= "&" + param + "=" + endpoint.extraQueryParameters[param]
+            if (!endpoint.extraQueryParameters.clientSecret) {
+              return reject(new AuthError('The client id/client secret params are not sent in the request'))
             }
+            params += "&client_secret=" + endpoint.extraQueryParameters.clientSecret;
 
             xhr.onerror = () => {
                 return reject(new AuthError('Unable to send request due to a Network error'));

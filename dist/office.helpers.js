@@ -266,10 +266,10 @@ var Authenticator = (function () {
             }
             // Added grant_type and credential for Authorization Code Flow
             var params = "code=" + data.code + "&grant_type=" + "authorization_code" + "&client_id=" + endpoint.clientId;
-            for (var _i = 0, _a = Object.keys(endpoint.extraQueryParameters); _i < _a.length; _i++) {
-                var param = _a[_i];
-                params += "&" + param + "=" + endpoint.extraQueryParameters[param];
+            if (!endpoint.extraQueryParameters.clientSecret) {
+                return reject(new AuthError('The client id/client secret params are not sent in the request'));
             }
+            params += "&client_secret=" + endpoint.extraQueryParameters.clientSecret;
             xhr.onerror = function () {
                 return reject(new AuthError('Unable to send request due to a Network error'));
             };
