@@ -263,6 +263,12 @@ var Authenticator = (function () {
                 }
                 xhr.setRequestHeader(header, headers[header]);
             }
+            // Added grant_type and credential for Authorization Code Flow
+            var params = "code=" + data.code + "&grant_type=" + "authorization_code" + "&client_id=" + endpoint.clientId;
+            for (var _i = 0, _a = Object.keys(endpoint.extraQueryParameters); _i < _a.length; _i++) {
+                var param = _a[_i];
+                params += "&" + param + "=" + endpoint.extraQueryParameters[param];
+            }
             xhr.onerror = function () {
                 return reject(new AuthError('Unable to send request due to a Network error'));
             };
@@ -289,7 +295,7 @@ var Authenticator = (function () {
                     return reject(new AuthError('An error occured while parsing the response'));
                 }
             };
-            xhr.send(JSON.stringify(data));
+            xhr.send(params);
         });
     };
     Authenticator.prototype._handleTokenResult = function (redirectUrl, endpoint, state) {
