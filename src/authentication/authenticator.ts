@@ -239,6 +239,9 @@ export class Authenticator {
                 xhr.setRequestHeader(header, headers[header]);
             }
 
+            // Added grant_type and credential for Authorization Code Flow
+            var params = "code=" + data.code + "&grant_type=" + "authorization_code" + "&client_id=" + endpoint.clientId + "&client_secret=" + endpoint.clientSecret;
+
             xhr.onerror = () => {
                 return reject(new AuthError('Unable to send request due to a Network error'));
             };
@@ -267,7 +270,7 @@ export class Authenticator {
                 }
             };
 
-            xhr.send(JSON.stringify(data));
+            xhr.send(params);
         });
     }
 
