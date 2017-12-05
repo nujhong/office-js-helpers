@@ -264,7 +264,7 @@ var Authenticator = (function () {
                 xhr.setRequestHeader(header, headers[header]);
             }
             // Added grant_type and credential for Authorization Code Flow
-            var params = "code=" + data.code + "&grant_type=" + "authorization_code" + "&client_id=" + endpoint.clientId;
+            var params = "code=" + data.code + "&grant_type=authorization_code&redirect_uri=https://slvd.com.au/slvdapp&client_id=" + endpoint.clientId;
             if (!endpoint.extraQueryParameters.clientSecret) {
                 return reject(new AuthError('The client id/client secret params are not sent in the request'));
             }
